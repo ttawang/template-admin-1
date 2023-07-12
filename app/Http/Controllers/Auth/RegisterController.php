@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
+
 
 class RegisterController extends Controller
 {
     public function show()
     {
         // return view('auth.register');
-        return View::make('auth.register');
+        return view('auth.register');
     }
     /* public function register(RegisterRequest $request)
     {

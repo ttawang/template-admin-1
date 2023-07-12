@@ -30,7 +30,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => "master"], function () {
         Route::group(['prefix' => "user"], function () {
             Route::get('/', [UserController::class, 'index']);
-            Route::get('table-user', [UserController::class, 'table_user']);
             Route::post('simpan', [UserController::class, 'simpan']);
             Route::get('hapus/{id}', [UserController::class, 'hapus']);
             Route::get('get-data/{id}', [UserController::class, 'get_data']);

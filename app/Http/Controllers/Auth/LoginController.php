@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
+
 
 class LoginController extends Controller
 {
     public function show()
     {
-        return View::make('auth.login');
+        return view('auth.login');
     }
     public function login(LoginRequest $request)
     {

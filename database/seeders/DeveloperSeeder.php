@@ -14,7 +14,18 @@ class DeveloperSeeder extends Seeder
      */
     public function run()
     {
-        // $val = string('developer');
+        /* for ($i = 1; $i <= 10000; $i++) {
+            $username = 'user' . $i;
+            $email = 'user' . $i . '@example.com';
+
+            User::create([
+                'name' => $username,
+                'username' => $username,
+                'email' => $email,
+                'password' => 'password'
+            ]);
+        } */
+
         User::create([
             'name' => 'developer',
             'username' => 'developer',

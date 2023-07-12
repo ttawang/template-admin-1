@@ -7,9 +7,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
@@ -17,17 +18,31 @@ class UserController extends Controller
     {
         $data['menu'] = 'Master';
         $data['sub_menu'] = 'User';
+
+        if (request()->ajax()) {
+            $temp = User::where('role', '!=', 'developer')->orderBy('id', 'desc');
+            return DataTables::of($temp)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $action = '
+                        <button class="btn btn-xs btn-primary btn-round" data-toggle="tooltip" data-placement="top" title="Edit Data" data-id="'.$row->id.'" onclick="edit($(this))">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn btn-xs btn-danger btn-round" data-toggle="tooltip" data-placement="top" title="Hapus Data" data-id="'.$row->id.'" onclick="hapus($(this))">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    ';
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('page.master.user.index', $data);
-    }
-    public function table_user()
-    {
-        $data['data'] = User::where('role', '!=', 'developer')->orderBy('id', 'desc')->get();
-        return View::make('page.master.user.table-user', $data);
     }
     public function simpan(Request $request)
     {
         $id = $request->id;
-        if(!$id){
+        if (!$id) {
             $rules = [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email:rfc,dns|unique:users,email',
@@ -96,7 +111,8 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
-    public function get_data($id){
+    public function get_data($id)
+    {
         $data = User::find($id);
         return response()->json($data);
     }

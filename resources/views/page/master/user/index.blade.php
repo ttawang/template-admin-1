@@ -16,9 +16,31 @@
 @section('content')
     <div class="panel">
         <div class="panel-body">
-            <div class="row mb-15" id="wrapperMainPembelian">
-                <div class="col-md-12" id="divTable">
+            <div class="row mb-15">
+                <div class="col-md-12">
+                    <table class="table table-hover dataTable table-striped w-full" id="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center" width="5%">No</th>
+                                <th style="text-align: center">Nama</th>
+                                <th style="text-align: center">Username</th>
+                                <th style="text-align: center">Email</th>
+                                <th style="text-align: center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th style="text-align: center" width="5%">No</th>
+                                <th style="text-align: center">Nama</th>
+                                <th style="text-align: center">Username</th>
+                                <th style="text-align: center">Email</th>
+                                <th style="text-align: center">Aksi</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
 
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -79,8 +101,41 @@
     <script>
         $(function() {
             $('[data-toggle="tooltip"]').tooltip();
-            load();
+            table;
         });
+
+        var table = $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url('master/user') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'username',
+                        name: 'username'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    }
+                ],
+                columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 1, 2, 3, 4]
+                }, ],
+            });
 
         $('#modal-kelola').on('hide.bs.modal', function(e) {
             $('#id').val('');
@@ -130,11 +185,11 @@
                             title: 'Berhasil',
                             text: respon.message,
                         }).then((result) => {
-                            load();
+                            table.ajax.reload();
                         });
                     } else {
                         $('#modal-kelola').modal('hide');
-                        
+
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal',
@@ -146,7 +201,7 @@
                                     ${('password_confirmation' in respon.message) ? respon.message.password_confirmation+',' : ''}
                                 `,
                         }).then((result) => {
-                            load();
+                            table.ajax.reload();
                         });
                     }
                 }
@@ -176,7 +231,7 @@
                                     title: 'Berhasil',
                                     text: respon.message,
                                 }).then((result) => {
-                                    load();
+                                    table.ajax.reload();
                                 });
                             } else {
                                 Swal.fire({
@@ -184,19 +239,12 @@
                                     title: 'Gagal',
                                     text: respon.message,
                                 }).then((result) => {
-                                    load();
+                                    table.ajax.reload();
                                 });
                             }
                         }
                     });
                 }
-            });
-        }
-
-        function load() {
-            render({
-                URL: `user/table-user`,
-                tagID: 'divTable'
             });
         }
     </script>
