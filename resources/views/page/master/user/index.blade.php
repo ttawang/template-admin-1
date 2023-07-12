@@ -105,37 +105,37 @@
         });
 
         var table = $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ url('master/user') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        searchable: false,
-                        orderable: false
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'username',
-                        name: 'username'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    }
-                ],
-                columnDefs: [{
-                    className: 'text-center',
-                    targets: [0, 1, 2, 3, 4]
-                }, ],
-            });
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('master/user') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'username',
+                    name: 'username'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                }
+            ],
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4]
+            }, ],
+        });
 
         $('#modal-kelola').on('hide.bs.modal', function(e) {
             $('#id').val('');
